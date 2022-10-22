@@ -1,0 +1,47 @@
+#fridge {
+  width: 100px;
+}
+#fridge, #fridge_door_outside, #fridge_door_inside {
+  cursor: pointer;
+}
+#fridge_door_outside, #fridge_door_inside {
+  position: absolute;
+  transition: transform 0.4s linear 0.4s;
+}
+#fridge_door_outside {
+  top: 0;
+  left: 0;
+  height: 154px;
+  transform-origin: right;
+}
+#fridge_door_inside {
+  top: 11px;
+  left: 99px;
+  height: 142px;
+  transform-origin: left;
+}
+#fridge_container {
+  position: relative;
+  transition: transform 0.8s linear;
+}
+#fridge_container.open {
+  transform: translateX(-50%);
+}
+#fridge_container.open #fridge_door_outside,
+#fridge_container:not(.open) #fridge_door_inside {
+  transform: scaleX(0);
+  transition-delay: 0s;
+}
+@media (min-width: 576px) {
+  #fridge {
+    width: 200px;
+  }
+  #fridge_door_outside {
+    height: 308px;
+  }
+  #fridge_door_inside {
+    top: 23.5px;
+    left: 198px;
+    height: 282px;
+  }
+}

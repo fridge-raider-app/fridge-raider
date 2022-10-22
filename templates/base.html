@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fridge Raider</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/static/bootstrap.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam&display=swap">
+  <link rel="stylesheet" href="/static/fridge.css">
+  <style>
+    body.no-transitions * {
+      transition: none !important;
+    }
+  </style>
+</head>
+<body class="h-100 no-transitions" style="background: url('/static/background.png') center/cover no-repeat fixed;">
+  <div class="fixed-top">
+    <h1 class="display-4 text-center my-0 pt-3 pb-2 text-uppercase" style="background: linear-gradient(45deg, #87c7f2, #d0f2ff); color: #030064; font-family: Kalam">Fridge Raider</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #030064;">
+      <div class="container-fluid text-center justify-content-center">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav w-100 justify-content-around">
+            <li class="nav-item"><a class="nav-link" href="/"><i class="fa fa-home"></i> Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/about"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="/faq"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
+            {% if user.is_anonymous %}
+              <li class="nav-item"><a class="nav-link" href="/search"><i class="fa fa-search"></i> Search Recipes</a></li>
+              <li class="nav-item"><a class="nav-link" href="/login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Sign Up/Log In</a></li>
+            {% else %}
+              <li class="nav-item"><a class="nav-link" href="/fridge"><i class="fa-solid fa-snowflake"></i> Your Fridge</a></li>
+              <li class="nav-item"><a class="nav-link" href="/favourites"><i class="fa-solid fa-star"></i> Your Favourites</a></li>
+              <li class="nav-item">
+                <form method="post" action="/logout">
+                  <button type="submit" class="btn btn-link nav-link mx-auto border-0"><i class="fa-solid fa-arrow-right-to-bracket"></i> Log Out</button>
+                </form>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <div style="padding-top: 12rem; padding-bottom: 3rem;">
+    {% block body %}{% endblock %}
+  </div>
+  <script src="/static/bootstrap.js"></script>
+  <script>
+    document.body.classList.remove("no-transitions")
+  </script>
+</body>
+</html>

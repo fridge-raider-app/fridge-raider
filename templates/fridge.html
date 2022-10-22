@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block body %}
+  <div class="p-5 rounded mx-auto text-center" style="width: 1200px; max-width: 90%; background-color: #fffc;">
+    <div class="row">
+      <div class="col-lg d-flex flex-column align-items-center my-3">
+        <div id="fridge_container">
+          <img id="fridge" src="/static/fridge.png">
+          <img id="fridge_door_outside" src="/static/fridge_door_outside.png">
+          <img id="fridge_door_inside" src="/static/fridge_door_inside.png">
+        </div>
+      </div>
+      <div class="col-lg d-flex flex-column align-items-center my-3">
+        <h2 class="text-center">Find recipes that use the contents of your fridge</h2>
+        <form class="w-100 py-3">
+          <input type="text" class="form-control text-center">
+        </form>
+      </div>
+    </div>
+  </div>
+  <script>
+    const fridge_container = document.getElementById("fridge_container")
+    const fridge = document.getElementById("fridge")
+    const fridge_door_outside = document.getElementById("fridge_door_outside")
+    const fridge_door_inside = document.getElementById("fridge_door_inside")
+    const fridge_parts = [fridge, fridge_door_outside, fridge_door_inside]
+
+    fridge_parts.forEach(function(part) {
+      part.addEventListener("click", function() {
+        fridge_container.classList.toggle("open")
+      })
+    })
+  </script>
+{% endblock %}
