@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block body %}
+  <div class="p-5 rounded mx-auto" style="width: 768px; max-width: 90%; background-color: #fffc;">
+    <h1 class="text-center mb-4">Log In</h1>
+    <form method="post" class="text-center mx-auto" style="max-width: 350px;">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="mb-4">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-info w-100">Login</button>
+      {% with error_messages = get_flashed_messages(category_filter=['error']) %}
+        {% if error_messages %}
+          <p class="text-danger mt-3">{{ error_messages|join(' • ') }}</p>
+        {% endif %}
+      {% endwith %}
+      {% with info_messages = get_flashed_messages(category_filter=['info']) %}
+        {% if info_messages %}
+          <p class="text-success mt-3">{{ info_messages|join(' • ') }}</p>
+        {% endif %}
+      {% endwith %}
+      <p class="mt-4">Don't have an account yet? <a href="/signup" class="link-primary">Sign up instead</a></p>
+    </form>
+  </div>
+{% endblock %}
