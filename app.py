@@ -4,6 +4,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, curren
 from config import SECRET_KEY
 
 from database.users import add_user, email_available, get_user_with_credentials, get_user_by_id
+from api.recipes import RecipeManager
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
@@ -13,6 +14,8 @@ login_manager.init_app(app)
 login_manager.login_view = '/login'
 login_manager.login_message = 'Please log in to view this page.'
 login_manager.login_message_category = 'error'
+
+recipe_manager = RecipeManager()
 
 
 class User(UserMixin):
@@ -49,7 +52,13 @@ def view_faq():
 
 @app.get('/search')
 def view_recipe_search():
-    return render_template("search.html", user=current_user)
+    ingredient = request.args.get("ingredient")
+    if ingredient:
+        recipes = recipe_manager.get_recipes_by_ingredient(ingredient)
+    else:
+        recipes = None
+    print(recipes)
+    return render_template("search.html", user=current_user, recipes=recipes)
 
 
 @app.get('/login')
