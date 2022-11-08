@@ -9,11 +9,141 @@
           <img id="fridge_door_inside" src="/static/fridge_door_inside.png">
         </div>
       </div>
-      <div class="col-lg d-flex flex-column align-items-center my-3">
+      <div class="col-lg d-flex flex-column my-3">
         <h2 class="text-center">Find recipes that use the contents of your fridge</h2>
-        <form class="w-100 py-3">
-          <input type="text" class="form-control text-center">
+        <form method="get" class="my-4">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Ingredient(s)" name="ingredient" value="{{ ingredient }}">
+            <button class="btn btn-info" type="submit">Search</button>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 d-flex align-items-center mb-3">
+              <label for="diet" class="me-2">Diet</label>
+              <select class="form-select form-select-sm" id="diet" name="diet">
+                <option value="">Any</option>
+                <option value="balanced" {{ 'selected' if diet == 'balanced' else '' }}>Balanced</option>
+                <option value="high-fiber" {{ 'selected' if diet == 'high-fiber' else '' }}>High-fibre</option>
+                <option value="high-protein" {{ 'selected' if diet == 'high-protein' else '' }}>High-protein</option>
+                <option value="low-carb" {{ 'selected' if diet == 'low-carb' else '' }}>Low-carb</option>
+                <option value="low-fat" {{ 'selected' if diet == 'low-fat' else '' }}>Low-fat</option>
+                <option value="low-sodium" {{ 'selected' if diet == 'low-sodium' else '' }}>Low-sodium</option>
+              </select>
+            </div>
+            <div class="col-sm-6 d-flex align-items-center mb-3">
+              <label for="health" class="me-2">Health</label>
+              <select class="form-select form-select-sm" id="health" name="health">
+                <option value="">Any</option>
+                <option value="dairy-free" {{ 'selected' if health == 'dairy-free' else '' }}>Dairy-free</option>
+                <option value="egg-free" {{ 'selected' if health == 'egg-free' else '' }}>Egg-free</option>
+                <option value="gluten-free" {{ 'selected' if health == 'gluten-free' else '' }}>Gluten-free</option>
+                <option value="keto-friendly" {{ 'selected' if health == 'keto-friendly' else '' }}>Keto-friendly</option>
+                <option value="kosher" {{ 'selected' if health == 'kosher' else '' }}>Kosher</option>
+                <option value="low-sugar" {{ 'selected' if health == 'low-sugar' else '' }}>Low-sugar</option>
+                <option value="paleo" {{ 'selected' if health == 'paleo' else '' }}>Paleo</option>
+                <option value="peanut-free" {{ 'selected' if health == 'peanut-free' else '' }}>Peanut-free</option>
+                <option value="pescatarian" {{ 'selected' if health == 'pescatarian' else '' }}>Pescatarian</option>
+                <option value="pork-free" {{ 'selected' if health == 'pork-free' else '' }}>Pork-free</option>
+                <option value="soy-free" {{ 'selected' if health == 'soy-free' else '' }}>Soy-free</option>
+                <option value="vegan" {{ 'selected' if health == 'vegan' else '' }}>Vegan</option>
+                <option value="vegetarian" {{ 'selected' if health == 'vegetarian' else '' }}>Vegetarian</option>
+                <option value="wheat-free" {{ 'selected' if health == 'wheat-free' else '' }}>Wheat-free</option>
+              </select>
+            </div>
+            <div class="col-sm-6 d-flex align-items-center mb-3">
+              <label for="cuisine_type" class="me-2">Cuisine</label>
+              <select class="form-select form-select-sm" id="cuisine_type" name="cuisine_type">
+                <option value="">Any</option>
+                <option value="American" {{ 'selected' if cuisine_type == 'American' else '' }}>American</option>
+                <option value="Asian" {{ 'selected' if cuisine_type == 'Asian' else '' }}>Asian</option>
+                <option value="British" {{ 'selected' if cuisine_type == 'British' else '' }}>British</option>
+                <option value="Caribbean" {{ 'selected' if cuisine_type == 'Caribbean' else '' }}>Caribbean</option>
+                <option value="Central Europe" {{ 'selected' if cuisine_type == 'Central Europe' else '' }}>Central European</option>
+                <option value="Chinese" {{ 'selected' if cuisine_type == 'Chinese' else '' }}>Chinese</option>
+                <option value="Eastern Europe" {{ 'selected' if cuisine_type == 'Eastern Europe' else '' }}>Eastern European</option>
+                <option value="French" {{ 'selected' if cuisine_type == 'French' else '' }}>French</option>
+                <option value="Indian" {{ 'selected' if cuisine_type == 'Indian' else '' }}>Indian</option>
+                <option value="Italian" {{ 'selected' if cuisine_type == 'Italian' else '' }}>Italian</option>
+                <option value="Japanese" {{ 'selected' if cuisine_type == 'Japanese' else '' }}>Japanese</option>
+                <option value="Mediterranean" {{ 'selected' if cuisine_type == 'Mediterranean' else '' }}>Mediterranean</option>
+                <option value="Mexican" {{ 'selected' if cuisine_type == 'Mexican' else '' }}>Mexican</option>
+                <option value="Middle Eastern" {{ 'selected' if cuisine_type == 'Middle Eastern' else '' }}>Middle Eastern</option>
+                <option value="Nordic" {{ 'selected' if cuisine_type == 'Nordic' else '' }}>Nordic</option>
+                <option value="South American" {{ 'selected' if cuisine_type == 'South American' else '' }}>South American</option>
+                <option value="South East Asian" {{ 'selected' if cuisine_type == 'South East Asian' else '' }}>South East Asian</option>
+              </select>
+            </div>
+            <div class="col-sm-6 d-flex align-items-center mb-3">
+              <label for="meal_type" class="me-2">Meal</label>
+              <select class="form-select form-select-sm" id="meal_type" name="meal_type">
+                <option value="">Any</option>
+                <option value="Breakfast" {{ 'selected' if meal_type == 'Breakfast' else '' }}>Breakfast</option>
+                <option value="Lunch" {{ 'selected' if meal_type == 'Lunch' else '' }}>Lunch</option>
+                <option value="Dinner" {{ 'selected' if meal_type == 'Dinner' else '' }}>Dinner</option>
+                <option value="Snack" {{ 'selected' if meal_type == 'Snack' else '' }}>Snack</option>
+              </select>
+            </div>
+          </div>
         </form>
+        <div class="row justify-content-center">
+          {% if recipes is not none %}
+            <h3 class="mb-3">Results</h3>
+            {% for recipe in recipes %}
+              <div class="col col-sm-6 col-md-4 col-lg-6 col-xl-4">
+                <div class="card mb-3" style="position: relative;">
+                  <form method="post" action="/favourites/add" class="p-1" style="position: absolute; top: 0; right: 0;">
+                    <input type="hidden" name="recipe_name" value="{{ recipe.recipe.label }}">
+                    <input type="hidden" name="recipe_source" value="{{ recipe.recipe.source }}">
+                    <input type="hidden" name="recipe_url" value="{{ recipe.recipe.url }}">
+                    <input type="hidden" name="image_url" value="{{ recipe.recipe.image }}">
+                    <button type="submit" class="btn btn-info rounded-circle shadow border-primary p-1" style="width: 40px; height: 40px;"><i class="fa-solid fa-star"></i></button>
+                  </form>
+                  <img src="{{ recipe.recipe.image }}" class="card-img-top">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ recipe.recipe.label }}</h5>
+                    <p class="card-text"><a href="{{ recipe.recipe.url }}" target="_blank">{{ recipe.recipe.source }}</a></p>
+                  </div>
+                  <div class="card-footer text-center">
+                    <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#{{ recipe.recipe.uri.split('#')[-1] }}">More info</button>
+                  </div>
+                </div>
+              </div>
+              <div class="modal fade" id="{{ recipe.recipe.uri.split('#')[-1] }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5">Recipe Information</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Nutritional details for <strong>{{ recipe.recipe.label }}</strong></p>
+                      <div class="border rounded overflow-hidden">
+                        <table class="table mb-0" style="table-layout: fixed;">
+                          <thead class="table-light">
+                            <tr>
+                              <th scope="col">Nutrient</th>
+                              <th scope="col">Value</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for nutrient in recipe.recipe.totalNutrients.values() %}
+                              <tr>
+                                <th scope="row">{{ nutrient.label }}</th>
+                                <td>{{ round(nutrient.quantity) }}{{ nutrient.unit }}</td>
+                              </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            {% if recipes|length == 0 %}
+              <p>No results found.</p>
+            {% endif %}
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>

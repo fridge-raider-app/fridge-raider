@@ -4,6 +4,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, curren
 from config import SECRET_KEY
 
 from database.users import add_user, email_available, get_user_with_credentials, get_user_by_id
+from database.favourites import add_favourite_recipe, get_favourite_recipes, remove_favourite_recipe
 from api.recipes import RecipeManager
 
 app = Flask(__name__)
@@ -52,13 +53,12 @@ def view_faq():
 
 @app.get('/search')
 def view_recipe_search():
-    ingredient = request.args.get("ingredient")
+    ingredient = request.args.get("ingredient") or ""
     if ingredient:
         recipes = recipe_manager.get_recipes_by_ingredient(ingredient)
     else:
         recipes = None
-    print(recipes)
-    return render_template("search.html", user=current_user, recipes=recipes)
+    return render_template("search.html", user=current_user, recipes=recipes, ingredient=ingredient)
 
 
 @app.get('/login')
@@ -119,13 +119,43 @@ def submit_logout():
 @app.get('/fridge')
 @login_required
 def view_fridge():
-    return render_template("fridge.html", user=current_user)
+    ingredient = request.args.get("ingredient") or ""
+    diet = request.args.get("diet") or ""
+    health = request.args.get("health") or ""
+    cuisine_type = request.args.get("cuisine_type") or ""
+    meal_type = request.args.get("meal_type") or ""
+    if ingredient:
+        recipes = recipe_manager.get_recipes_by_extended_query(ingredient, diet, health, cuisine_type, meal_type)
+    else:
+        recipes = None
+    return render_template("fridge.html", user=current_user, recipes=recipes, round=round,
+                           ingredient=ingredient, diet=diet, health=health, cuisine_type=cuisine_type, meal_type=meal_type)
 
 
 @app.get('/favourites')
 @login_required
 def view_favourites():
-    return render_template("favourites.html", user=current_user)
+    recipes = get_favourite_recipes(current_user.id)
+    return render_template("favourites.html", user=current_user, recipes=recipes)
+
+
+@app.post('/favourites/add')
+@login_required
+def add_favourite():
+    recipe_name = request.form.get('recipe_name')
+    recipe_source = request.form.get('recipe_source')
+    recipe_url = request.form.get('recipe_url')
+    image_url = request.form.get('image_url')
+    add_favourite_recipe(current_user.id, recipe_name, recipe_source, recipe_url, image_url)
+    return redirect('/favourites')
+
+
+@app.post('/favourites/remove')
+@login_required
+def remove_favourite():
+    recipe_id = request.form.get('recipe_id')
+    remove_favourite_recipe(recipe_id, current_user.id)
+    return redirect('/favourites')
 
 
 if __name__ == '__main__':
