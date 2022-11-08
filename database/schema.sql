@@ -8,19 +8,13 @@ CREATE TABLE users (
   hashed_password BLOB
 );
 
-CREATE TABLE user_ingredients (
-  user_id INTEGER NOT NULL,
-  name VARCHAR(255) NOT NULL,
-
-  FOREIGN KEY (user_id) REFERENCES users (id)
-);
-
 CREATE TABLE user_favourites (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
   user_id INTEGER NOT NULL,
   recipe_name VARCHAR(255) NOT NULL,
   recipe_source VARCHAR(255),
   recipe_url VARCHAR(255) NOT NULL,
-  image_url VARCHAR(255) NOT NULL,
+  image_url TEXT NOT NULL,
 
   FOREIGN KEY (user_id) REFERENCES users (id)
 );

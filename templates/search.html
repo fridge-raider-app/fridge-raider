@@ -3,16 +3,16 @@
   <div class="p-5 rounded mx-auto text-center" style="width: 768px; max-width: 90%; background-color: #fffc;">
     <h1 class="text-center mb-4">Search Recipes</h1>
     <p class="lead">Here, you can preview our recipes without needing an account.</p>
-    <p>For extended features like the ability to save a favourite recipe, please <a href="/login" class="link-primary">log in</a>.</p>
+    <p>For extended features like the ability to choose dietary requirements or save a favourite recipe, please <a href="/login" class="link-primary">log in</a>.</p>
     <form method="get" class="mb-4">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Ingredient(s)" name="ingredient">
+        <input type="text" class="form-control" placeholder="Ingredient(s)" name="ingredient" value="{{ ingredient }}">
         <button class="btn btn-info" type="submit">Search</button>
       </div>
     </form>
-    <h3 class="mb-3">Results</h3>
     <div class="row justify-content-center">
       {% if recipes is not none %}
+        <h3 class="mb-3">Results</h3>
         {% for recipe in recipes %}
           <div class="col col-sm-6 col-md-4">
             <a href="{{ recipe.recipe.url }}" target="_blank" class="link-dark text-decoration-none">
@@ -26,6 +26,9 @@
             </a>
           </div>
         {% endfor %}
+        {% if recipes|length == 0 %}
+          <p>No results found.</p>
+        {% endif %}
       {% endif %}
     </div>
   </div>
